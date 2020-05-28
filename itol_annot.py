@@ -7,7 +7,6 @@ import argparse,csv,re,os
 import pandas as pd
 
 parser = argparse.ArgumentParser(description = 'This script creates itol annotation files',formatter_class=argparse.RawTextHelpFormatter)
-
 parser.add_argument("-in", "--input", help="File with sequence names",  required=True)
 #A reference file should be parsed, in the same model of 'reference_gisaid.txt' file, but with all current countries present on GISAID.
 parser.add_argument("-rf","--reference",help="Reference file with annotation (gisaid regions, country, continent and color, 'reference_gisaid.txt')", required=True)
@@ -15,14 +14,13 @@ parser.add_argument("-it","--itol",help="iTol template file, 'iTOL_template.txt'
 args = parser.parse_args()
 sequence_name_file = args.input
 reference_file = args.reference
-function_type = args.function
 itol_file = args.itol
 
 #open temp file
 annotation_info = open(itol_file+'.info','w',newline='')
 writer_out_file = csv.writer(annotation_info)
 
-#create a file with 4 fields, sequence name, branch, color, normal and country
+#create a file with 5 fields, sequence name, branch, color, normal and country
 def func_colors(seq_name,reference_file,itol_file):
     """
     This function execute the match between contries in name sequences and contries in reference file.
@@ -40,6 +38,7 @@ def func_colors(seq_name,reference_file,itol_file):
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'dashed',row[1]])
                 else:
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'normal',row[1]])
+    annotation_info.close()
 
 #format sequence name to tree output format sequence names
 with open(sequence_name_file,'r') as input_file:
