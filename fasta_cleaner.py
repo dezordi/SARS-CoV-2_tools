@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#Write by genivaldo.gueiros@gmail.com (https://biopython.org/wiki/Sequence_Cleaner)
+#Modified by Filipe Dezordi (zimmer.filipe@gmail.com)
+#At FioCruz/IAM - 2020/05/25
 
 import argparse
 from Bio import SeqIO
@@ -15,7 +18,16 @@ fasta_file = args.input
 min_length = args.min_length
 n_per = args.n_per
 
+#check if sequences have the min length and are bellow the percentage of N parsed.
 def fasta_clean(file, length, n_per):
+    """
+    This function execute the cleanning steps..
+
+    Keyword arguments:
+    file - fasta file, parsed with -in argument
+    length - treshold length value, parsed with -ln argument
+    n_per - treshold N percentage value, parsed with -np argument.
+    """
     sequences={}
     for seq_record in SeqIO.parse(fasta_file, "fasta"):
         sequence = str(seq_record.seq)

@@ -7,6 +7,7 @@ import argparse, subprocess, shlex, csv, re, os
 parser = argparse.ArgumentParser(description = 'This script automatize cd-hit-est with gisaid sars-cov-sequences by country',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
+#A reference file should be parsed, in the same model of 'reference_gisaid.txt' file, but with all current countries present on GISAID.
 parser.add_argument("-rf","--reference",help="Reference file with annotation (region, country, etc).", required=True)
 parser.add_argument("-p","--threads",help="Threads for cd-hit-est analyze.", default = 1, type=int)
 parser.add_argument("-m","--memory",help="Memory in MB for cd-hit-est analyze",default = 2000, type=int)
@@ -18,14 +19,17 @@ var_memory = args.memory
 
 input_names = open(sequence_name_file+'.names.txt','w')
 
+#store all sequence names from fasta file.
 with open(sequence_name_file,'r') as input_read:
     for line in input_read:
         if '>' in line:
             input_names.write(line)
 
 input_names.close()
+
 list_to_cd_hit = []
 
+#Create files with extesion '.names' containing all fasta names per country
 with open(reference_file,'r') as input_reference, open(sequence_name_file+'.names.txt') as name_reader:
     list_of_lines_reference = input_reference.readlines()
     csv_reader = csv.reader(list_of_lines_reference)
@@ -43,9 +47,10 @@ with open(reference_file,'r') as input_reference, open(sequence_name_file+'.name
                 list_to_cd_hit.append(line_ref[1]+'.names')
             else:
                 pass
-
+#list with all files with sequence names by country.
 seqtk_output_list = []
 
+#Generates fasta files for each country, using the previous list 'list_to_cd_hit'
 for file_name in list_to_cd_hit:
     with open(file_name+'.fasta','w') as seqtk_out:
         seqtk_cmd = 'seqtk subseq '+sequence_name_file+' '+file_name
@@ -54,6 +59,7 @@ for file_name in list_to_cd_hit:
         seqtk_cmd_process.wait()
         seqtk_output_list.append(file_name+'.fasta')
 
+#Run cd-hit-est for each file, considering only identical sequences to perform clusterizations
 for output_name in seqtk_output_list:
     with open(output_name+'.cd-hit.log','w') as cd_hit_log:
         cd_hit_out = output_name+'.cd'

@@ -1,27 +1,38 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+#Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
+#At FioCruz/IAM - 2020/05/25
 
-import argparse,csv,re
+import argparse,csv,re,os
 import pandas as pd
 
 parser = argparse.ArgumentParser(description = 'This script creates itol annotation files',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="File with sequence names",  required=True)
-parser.add_argument("-rf","--reference",help="Reference file with annotation (colors, shapes, etc)", required=True)
-parser.add_argument("-fc","--function",help="Function of annotation (color, shapes, domainss)", default='color')
-parser.add_argument("-it","--itool",help="iTol template file",required=True,)
+#A reference file should be parsed, in the same model of 'reference_gisaid.txt' file, but with all current countries present on GISAID.
+parser.add_argument("-rf","--reference",help="Reference file with annotation (gisaid regions, country, continent and color, 'reference_gisaid.txt')", required=True)
+parser.add_argument("-it","--itol",help="iTol template file, 'iTOL_template.txt' can be used",required=True,)
 args = parser.parse_args()
-
 sequence_name_file = args.input
 reference_file = args.reference
 function_type = args.function
-itool_file = args.itool
+itol_file = args.itol
 
-annotation_info = open(itool_file+'.info','w',newline='')
+#open temp file
+annotation_info = open(itol_file+'.info','w',newline='')
 writer_out_file = csv.writer(annotation_info)
 
-def func_colors(seq_name,reference_file,itool_file):
-    with open(reference_file,'r') as ref_file, open(itool_file,'r') as itool_mod:
+#create a file with 4 fields, sequence name, branch, color, normal and country
+def func_colors(seq_name,reference_file,itol_file):
+    """
+    This function execute the match between contries in name sequences and contries in reference file.
+
+    Keyword arguments:
+    seq_name - txt file with sequence names, parsed with -in argument.
+    reference_file - gisaid reference csv file, parsed with -rf argument.
+    itol_file - iTOL template file, parsed with -it argument.
+    """
+    with open(reference_file,'r') as ref_file, open(itol_file,'r') as itol_mod:
         data_csv = csv.reader(ref_file)
         for row in data_csv:
             if row[0] in seq_name:
@@ -29,20 +40,23 @@ def func_colors(seq_name,reference_file,itool_file):
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'dashed',row[1]])
                 else:
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'normal',row[1]])
-    #annotation_info.close()
 
+#format sequence name to tree output format sequence names
 with open(sequence_name_file,'r') as input_file:
     for i in input_file:
         i = re.sub(r'>','',i)
         i = re.sub(r'/','_',i)
         i = re.sub(r'\|','_',i)
-        func_colors(i,reference_file,itool_file)
+        func_colors(i,reference_file,itol_file)
 
-with open(itool_file) as fp:
+#concatenate itol template and annotation file temp output
+with open(itol_file) as fp:
     data = fp.read()
-with open(itool_file+'.info','r') as fp:
+with open(itol_file+'.info','r') as fp:
     data2 = fp.read()
 data += data2
 
-with open(itool_file+'.branch.txt','w') as output:
+with open(itol_file+'.branch.txt','w') as output:
     output.write(data)
+
+os.remove(itol_file+'.info')
