@@ -104,6 +104,7 @@ Lithuania,Lithuania,Europe,#CCFF99
 Norway,Norway,Europe,#CCFF99
 Sweden,Sweden,Europe,#CCFF99
 Canada,Canada,North_America,#99FFCC
+JAM,Jamaica,North_America,#99FFCC
 Mexico,Mexico,North_America,#99FFCC
 Panama,Panama,North_America,#99FFCC
 USA,USA,North_America,#99FFCC
