@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
-#At FioCruz/IAM - 2020/05/25
+#At FioCruz/IAM - 2020/07/06
 
 import argparse,csv,re,os
 import pandas as pd
 
 parser = argparse.ArgumentParser(description = 'This script creates itol annotation files',formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("-in", "--input", help="File with sequence names",  required=True)
-#A reference file should be parsed, in the same model of 'reference_gisaid.txt' file, but with all current countries present on GISAID.
-parser.add_argument("-rf","--reference",help="Reference file with annotation (gisaid regions, country, continent and color, 'reference_gisaid.txt')", required=True)
+#A reference file should be parsed, in the same model of 'reference_gisaid.csv' file, but with all current countries present on GISAID up to June 03 2020.
+parser.add_argument("-rf","--reference",help="Reference file with annotation ('reference_gisaid.csv')", required=True)
 parser.add_argument("-it","--itol",help="iTol template file, 'iTOL_template.txt' can be used",required=True,)
 args = parser.parse_args()
 sequence_name_file = args.input

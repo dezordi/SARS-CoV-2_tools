@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
-#At FioCruz/IAM - 2020/06/17
+#At FioCruz/IAM - 2020/07/06
 
 import argparse, subprocess, shlex, csv, re, os
 import pandas as pd
-parser = argparse.ArgumentParser(description = 'This script create sample of SARS-CoV-Genomas considering redundancy between country and day of collection',formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(description = 'This script creates sample files of hCoV-19 Genomes considering redundancy between country and day or week of collection',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
-#A reference file should be parsed, in the same model of 'reference_gisaid.txt' file, but with all current countries present on GISAID.
-parser.add_argument("-rf","--reference",help="Reference file with annotation (region, country, etc).", required=True)
+#A reference file should be parsed, in the same model of 'reference_gisaid.csv' file, but with all current countries present on GISAID up to June 03 2020.
+parser.add_argument("-rf","--reference",help="Reference file with annotation (reference_gisaid.csv).", required=True)
 parser.add_argument("-gp","--groupby",help="Group by Day or Week? default=Day",default='Day',choices=['Day','Week'])
 args = parser.parse_args()
 sequence_name_file = args.input
@@ -29,6 +29,7 @@ with open(sequence_name_file+'.names.txt','r') as input_seqs,open(sequence_name_
     tmp_out_csv_writer.writerow(['Genome','Country','Year','Month','Day'])
     read_input_seqs = input_seqs.readlines()
     list_csv = []
+    #create a csv file with genome name and country,year,month and day
     for line in read_input_seqs:
         if '2020' in line:
             genome_name = re.sub(r'>','',line).rstrip('\n')
@@ -61,7 +62,7 @@ with open(sequence_name_file+'.names.txt','r') as input_seqs,open(sequence_name_
 
 with open(sequence_name_file+'.tmp','r') as tmp_input:
     df =  pd.read_csv(tmp_input, sep=',')
-    if group_opt == 'Week':
+    if group_opt == 'Week': #If Week as parsed with -gb, the days will be grouped in 5 different weeks
         df['Day'].loc[(df['Day'] <= 6)] = 1
         df['Day'].loc[(df['Day'] >6) & (df['Day'] <= 13)] = 2
         df['Day'].loc[(df['Day'] >13) & (df['Day'] <= 20)] = 3

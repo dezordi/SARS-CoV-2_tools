@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
-#At FioCruz/IAM - 2020/05/25
+#At FioCruz/IAM - 2020/07/06
 
 from Bio import AlignIO
 from Bio.SeqRecord import SeqRecord
@@ -10,9 +10,9 @@ from Bio import SeqIO
 import argparse
 
 
-parser = argparse.ArgumentParser(description = 'This tool mask SARS-CoV-2 alignment.',formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(description = 'This script masks hCoV-19 alignment.',formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
-parser.add_argument("-mk","--mask",help="Mask alignment file? Mask positions according 'Issues with SARS-CoV-2 sequencing data' Maio et al, 2020.\nCAUTION: your alignment should be referenced to MN908947.3.\nDefault = True.\nSet false if only gaps should be masked",choices=['False','True'],default='True')
+parser.add_argument("-mk","--mask",help="Mask alignment file? Mask positions according 'Issues with hCoV-19 sequencing data' Maio et al, 2020.\nCAUTION: your alignment should be referenced to MN908947.3.\nDefault = True.\nSet false if only gaps should be masked",choices=['False','True'],default='True')
 args = parser.parse_args()
 input_file = args.input
 mask = args.mask

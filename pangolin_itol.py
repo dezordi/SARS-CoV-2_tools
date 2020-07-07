@@ -1,16 +1,16 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 #Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
-#At FioCruz/IAM - 2020/05/25
+#At FioCruz/IAM - 2020/07/06
 
 import argparse,csv,re,os
 import pandas as pd
 
 parser = argparse.ArgumentParser(description = 'This script creates itol annotation files from pangolin csv output',formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument("-in", "--input", help="Pangolin output csv file",  required=True)
-#A reference file should be parsed, in the same model of 'reference_pangolin.txt' file, but with all current lineages present on pangolin.
-parser.add_argument("-rf","--reference",help="Pangolin reference csv file, with lineage and color)", required=True)
-parser.add_argument("-it","--itol",help="iTOL template file, 'iTOL_template.txt'",required=True,)
+#A reference file should be parsed, in the same model of 'reference_pangolin.csv' file, but with all current lineages present on pangolin.
+parser.add_argument("-rf","--reference",help="Pangolin reference csv file, with lineage and color (reference_pangolin.csv)", required=True)
+parser.add_argument("-it","--itol",help="iTOL template file (iTOL_template.txt)",required=True,)
 args = parser.parse_args()
 pangolin_file = args.input
 reference_file = args.reference
@@ -46,8 +46,8 @@ with open(pangolin_file,'r') as input_file:
         i = re.sub(r'\|','_',i)
         func_colors(i,i_l,reference_file,itol_file)
     annotation_info.close()
-#concatenate itol template and annotation file temp output
 
+#concatenate itol template and annotation file temp output
 with open(itol_file) as fp:
     data = fp.read()
 with open(itol_file+'.info','r') as fp:

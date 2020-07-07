@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 #Write by genivaldo.gueiros@gmail.com (https://biopython.org/wiki/Sequence_Cleaner)
 #Modified by Filipe Dezordi (zimmer.filipe@gmail.com)
-#At FioCruz/IAM - 2020/05/25
+#At FioCruz/IAM - 2020/07/06
 
 import argparse
 from Bio import SeqIO
 
-parser = argparse.ArgumentParser(description = 'This tool remove sequences by length and N% tresholds.',formatter_class=argparse.RawTextHelpFormatter)
-
+parser = argparse.ArgumentParser(description = 'This script removes sequences by length and N% tresholds.')
 parser.add_argument("-in", "--input", help="Fasta file",  required=True)
 parser.add_argument("-lg","--min_length",help="Length threshold", required=True)
 parser.add_argument("-np","--n_per",help="N percentage", default=5)
@@ -37,6 +36,7 @@ def fasta_clean(file, length, n_per):
     with open(fasta_file+'.clean', "w+") as output_file:
         for sequence in sequences:
             output_file.write(">" + sequences[sequence] + "\n" + sequence + "\n")
+            
 try:
     fasta_clean(fasta_file,min_length,n_per)
     print('DONE.')
