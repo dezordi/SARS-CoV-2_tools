@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
+#Written by: Filipe Dezordi (https://dezordi.github.io/)
 #At FioCruz/IAM - 2020/07/06
 
 import argparse, subprocess, shlex, csv, re, os
-parser = argparse.ArgumentParser(description = 'This script automatize cd-hit-est with gisaid sars-cov-sequences by country',formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(description = 'This script automatize cd-hit-est hCoV-19 genomes from GISAID by country',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
 #A reference file should be parsed, in the same model of 'reference_gisaid.csv' file, but with all current countries present on GISAID up to June 03 2020.
@@ -25,7 +25,6 @@ with open(sequence_name_file,'r') as input_read:
         if '>' in line:
             input_names.write(line)
 input_names.close()
-
 list_to_cd_hit = []
 #Create files with extesion '.names' containing all fasta names per country
 with open(reference_file,'r') as input_reference, open(sequence_name_file+'.names.txt') as name_reader:

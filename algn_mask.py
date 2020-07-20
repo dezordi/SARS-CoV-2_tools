@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
+#Written by: Filipe Dezordi (https://dezordi.github.io/)
 #At FioCruz/IAM - 2020/07/06
 
 from Bio import AlignIO
@@ -23,7 +23,7 @@ if mask == 'True':
 else:
     ext = '.nogap.fasta'
 
-#Open aligment and output file
+#Open aligment and output files
 alignment = AlignIO.read(open(input_file),'fasta')
 output_handle = open(input_file+ext, "w")
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-#Write by: Filipe Dezordi (zimmer.filipe@gmail.com)
+#Written by: Filipe Dezordi (https://dezordi.github.io/)
 #At FioCruz/IAM - 2020/07/06
 
 import argparse,csv,re,os

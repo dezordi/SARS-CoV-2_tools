@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#Write by genivaldo.gueiros@gmail.com (https://biopython.org/wiki/Sequence_Cleaner)
-#Modified by Filipe Dezordi (zimmer.filipe@gmail.com)
+#Base code from https://biopython.org/wiki/Sequence_Cleaner
+#Modified by Filipe Dezordi (https://dezordi.github.io/)
 #At FioCruz/IAM - 2020/07/06
 
 import argparse
