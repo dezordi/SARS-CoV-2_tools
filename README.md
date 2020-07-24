@@ -1,6 +1,6 @@
 # hCoV-19_tools
 
-This repository stores in house scripts used to automatize some routine tasks with hCoV-19. Almos all scripts here part of the principle that the genomes used as input have the same pattern of names that are present on [GISAID](https://www.gisaid.org/). CSV files were updated on 03 June 2020.
+This repository stores in house scripts used to automatize some routine tasks with hCoV-19. Almos all scripts here part of the principle that the genomes used as input have the same pattern of names that are present on [GISAID](https://www.gisaid.org/). CSV files were updated on 24 July 2020.
 
 ## Dependencies
 
