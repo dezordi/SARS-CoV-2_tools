@@ -34,7 +34,7 @@ UTR3 = [29675,29903]
 with open(snp_file,'r') as snp_in_file, open(snp_file+'.distr.tsv','w') as snp_file_out:
     reader_snp_in_file = snp_in_file.readlines()
     output_csv_writer = csv.writer(snp_file_out,delimiter='\t')
-    output_csv_writer.writerow(['POS','REGION','DEPTH','A','C','G','T','N'])
+    output_csv_writer.writerow(['POS','REGION','DEPTH','A_DEPTH','A_PLUS','A_MINUS','C_DEPTH','C_PLUS','C_MINUS','G_DEPTH','G_PLUS','G_MINUS','T_DEPTH','T_PLUS','T_MINUS','N'])
     out_list = []
     for snp_line in reader_snp_in_file:
         snp_line = snp_line.rstrip('\n')      
@@ -44,18 +44,34 @@ with open(snp_file,'r') as snp_in_file, open(snp_file+'.distr.tsv','w') as snp_f
                 if snp_line == line[1]:
                     var_pos = line[1].rstrip('\n')
                     var_depth = line[3].rstrip('\n')
-                    A_depth = line[5].rstrip('\n')
-                    A_depth = ":".join(A_depth.split(":", 2)[:2])
+                    A_depth_line = line[5].rstrip('\n')
+                    A_depth = ":".join(A_depth_line.split(":", 2)[:2])
                     A_depth = re.sub(r".*:","",A_depth)
-                    C_depth = line[6].rstrip('\n')
-                    C_depth = ":".join(C_depth.split(":", 2)[:2])
+                    A_plus = ":".join(A_depth_line.split(":", 6)[:6])
+                    A_plus = re.sub(r".*:","",A_plus)
+                    A_minus = ":".join(A_depth_line.split(":", 7)[:7])
+                    A_minus = re.sub(r".*:","",A_minus)
+                    C_depth_line = line[6].rstrip('\n')
+                    C_depth = ":".join(C_depth_line.split(":", 2)[:2])
                     C_depth = re.sub(r".*:","",C_depth)
-                    G_depth = line[7].rstrip('\n')
-                    G_depth = ":".join(G_depth.split(":", 2)[:2])
+                    C_plus = ":".join(C_depth_line.split(":", 6)[:6])
+                    C_plus = re.sub(r".*:","",C_plus)
+                    C_minus = ":".join(C_depth_line.split(":", 7)[:7])
+                    C_minus = re.sub(r".*:","",C_minus)
+                    G_depth_line = line[7].rstrip('\n')
+                    G_depth = ":".join(G_depth_line.split(":", 2)[:2])
                     G_depth = re.sub(r".*:","",G_depth)
-                    T_depth = line[8].rstrip('\n')
-                    T_depth = ":".join(T_depth.split(":", 2)[:2])
+                    G_plus = ":".join(G_depth_line.split(":", 6)[:6])
+                    G_plus = re.sub(r".*:","",G_plus)
+                    G_minus = ":".join(G_depth_line.split(":", 7)[:7])
+                    G_minus = re.sub(r".*:","",G_minus)
+                    T_depth_line = line[8].rstrip('\n')
+                    T_depth = ":".join(T_depth_line.split(":", 2)[:2])
                     T_depth = re.sub(r".*:","",T_depth)
+                    T_plus = ":".join(T_depth_line.split(":", 6)[:6])
+                    T_plus = re.sub(r".*:","",T_plus)
+                    T_minus = ":".join(T_depth_line.split(":", 7)[:7])
+                    T_minus = re.sub(r".*:","",T_minus)
                     N_depth = line[9].rstrip('\n')
                     N_depth = ":".join(N_depth.split(":", 2)[:2])
                     N_depth = re.sub(r".*:","",N_depth)
@@ -85,9 +101,8 @@ with open(snp_file,'r') as snp_in_file, open(snp_file+'.distr.tsv','w') as snp_f
                         region = 'ORF10'
                     else:
                         region = '3UTR'
-                    out_list.append([var_pos,region,var_depth,A_depth,C_depth,G_depth,T_depth,N_depth])
+                    out_list.append([var_pos,region,var_depth,A_depth,A_plus,A_minus,C_depth,C_plus,C_minus,G_depth,G_plus,G_minus,T_depth,T_plus,T_minus,N_depth])
     output_csv_writer.writerows(out_list)
-
 df = pd.read_csv(snp_file+'.distr.tsv',sep='\t')
 df2 = df[['REGION','DEPTH']]
 df2 = pd.DataFrame(group.describe().loc[['count','min','max','mean','std']].rename(columns={'DEPTH':name}).squeeze()for name, group in df2.groupby('REGION'))
