@@ -5,9 +5,9 @@
 
 import argparse, subprocess, shlex, csv, re, os
 import pandas as pd
-from sklearn.utils import shuffle
+from sklearn.utils import shuffle 
 
-parser = argparse.ArgumentParser(description = 'This script creates sample files of hCoV-19 Genomes considering redundancy between country and day or week of collection',formatter_class=argparse.RawTextHelpFormatter)
+parser = argparse.ArgumentParser(description = 'This script creates sample files of hCoV-19 Genomes considering redundancy between country and day or week of collection, genomes without complete date of collection are discarted',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
 #A reference file should be parsed, in the same model of 'reference_gisaid.csv' file, but with all current countries present on GISAID up to June 03 2020.
