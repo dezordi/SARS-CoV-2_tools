@@ -5,6 +5,8 @@
 
 import argparse, subprocess, shlex, csv, re, os
 import pandas as pd
+from sklearn.utils import shuffle
+
 parser = argparse.ArgumentParser(description = 'This script creates sample files of hCoV-19 Genomes considering redundancy between country and day or week of collection',formatter_class=argparse.RawTextHelpFormatter)
 
 parser.add_argument("-in", "--input", help="Fasta file.",  required=True)
@@ -23,6 +25,7 @@ with open(sequence_name_file,'r') as input_read:
     for line in input_read:
         if '>' in line:
             input_names.write(line)
+input_names.close()
 
 with open(sequence_name_file+'.names.txt','r') as input_seqs,open(sequence_name_file+'.tmp','w') as tmp_out_csv:
     tmp_out_csv_writer = csv.writer(tmp_out_csv,delimiter=',')
@@ -69,6 +72,7 @@ with open(sequence_name_file+'.tmp','r') as tmp_input:
         df['Day'].loc[(df['Day'] >20) & (df['Day'] <= 26)] = 4
         df['Day'].loc[(df['Day'] >26) & (df['Day'] <= 31)] = 5
         df.columns = ['Genome','Country','Year','Month','Week']
+        df = shuffle(df)
         df2 = df.drop_duplicates(subset=['Country','Year','Month','Week']).sort_values(by=['Year','Month','Week'],ascending=True)
     else:
         df2 = df.drop_duplicates(subset=['Country','Year','Month','Day']).sort_values(by=['Year','Month','Day'],ascending=True)
