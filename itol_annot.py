@@ -34,7 +34,7 @@ def func_colors(seq_name,reference_file,itol_file):
         data_csv = csv.reader(ref_file)
         for row in data_csv:
             if row[0] in seq_name:
-                if row[0] in 'IAM':
+                if row[0] in 'PE-IAM':
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'dashed',2,row[1]])
                 else:
                     writer_out_file.writerow([i.rstrip('\n'),'branch',row[3],'normal',1,row[1]])
@@ -44,8 +44,8 @@ def func_colors(seq_name,reference_file,itol_file):
 with open(sequence_name_file,'r') as input_file:
     for i in input_file:
         i = re.sub(r'>','',i)
-        i = re.sub(r'/','_',i)
-        i = re.sub(r'\|','_',i)
+        #i = re.sub(r'/','_',i)
+        #i = re.sub(r'\|','_',i)
         func_colors(i,reference_file,itol_file)
     annotation_info.close()
 

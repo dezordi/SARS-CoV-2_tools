@@ -1,10 +1,10 @@
-# hCoV-19_tools
+# SARS-CoV-2_tools
 
-This repository stores in house scripts used to automatize some routine tasks with hCoV-19. Almos all scripts here part of the principle that the genomes used as input have the same pattern of names that are present on [GISAID](https://www.gisaid.org/). CSV files were updated on 24 July 2020.
+This repository stores in house scripts used to automatize some routine tasks with SARS-CoV-2 genomes. Almos all scripts here part of the principle that the genomes used as input have the same pattern of names that are present on [GISAID](https://www.gisaid.org/). CSV files were updated on 24 July 2020.
 
 ## Dependencies
 
-These scripts were built on python 3.6.5+ and have these dependencies:
+The scripts were built on python 3.6.5+ and have these dependencies:
 
 - [argparse](https://docs.python.org/3/library/argparse.html);
 - [biopython](https://biopython.org/);
@@ -16,7 +16,7 @@ These scripts were built on python 3.6.5+ and have these dependencies:
 - [GISAID information ](https://www.gisaid.org/): To access the most update hCoV-19 genomic information.
 
 ## Disclaimer
-- If you use one of these plots, please reference this repository;
+- If you use one of these scripts, please reference this repository;
 - Fell free to commit changes that make the code more efficient or cleaner.
 - This script will continue to be developed to englobe other functions.
 - More information, [Click here!](https://dezordi.github.io/)

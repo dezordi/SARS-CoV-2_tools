@@ -42,8 +42,8 @@ with open(pangolin_file,'r') as input_file:
         i = x[0]
         i_l = x[1]
         i = re.sub(r'>','',i)
-        i = re.sub(r'/','_',i)
-        i = re.sub(r'\|','_',i)
+        #i = re.sub(r'/','_',i)
+        #i = re.sub(r'\|','_',i)
         func_colors(i,i_l,reference_file,itol_file)
     annotation_info.close()
 
