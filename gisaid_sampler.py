@@ -34,7 +34,18 @@ with open(sequence_name_file+'.names.txt','r') as input_seqs,open(sequence_name_
     list_csv = []
     #create a csv file with genome name and country,year,month and day
     for line in read_input_seqs:
-        if '2020' in line:
+        if '2021' in line:
+            genome_name = re.sub(r'>','',line).rstrip('\n')
+            date_year = re.sub(r'.*2021','2021',line)
+            date_year = re.sub(r'-.*','',date_year).rstrip('\n')
+            date_month = re.sub(r'.*2021-','',line)
+            date_month = re.sub(r'-.*','',date_month).rstrip('\n')
+            if 'hCoV' in date_month:
+                date_month = ''
+            date_day = re.sub(r'.*2020-[0-9]*-','',line).rstrip('\n')
+            if 'hCoV' in date_day:
+                date_day = ''
+        elif '2020' in line:
             genome_name = re.sub(r'>','',line).rstrip('\n')
             date_year = re.sub(r'.*2020','2020',line)
             date_year = re.sub(r'-.*','',date_year).rstrip('\n')
