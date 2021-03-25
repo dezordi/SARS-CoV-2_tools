@@ -42,7 +42,7 @@ with open(sequence_name_file+'.names.txt','r') as input_seqs,open(sequence_name_
             date_month = re.sub(r'-.*','',date_month).rstrip('\n')
             if 'hCoV' in date_month:
                 date_month = ''
-            date_day = re.sub(r'.*2020-[0-9]*-','',line).rstrip('\n')
+            date_day = re.sub(r'.*2021-[0-9]*-','',line).rstrip('\n')
             if 'hCoV' in date_day:
                 date_day = ''
         elif '2020' in line:
